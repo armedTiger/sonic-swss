@@ -12,7 +12,7 @@ class NeighSync : public NetMsg
 public:
     enum { MAX_ADDR_SIZE = 64 };
 
-    NeighSync(DBConnector *db);
+    NeighSync(RedisPipeline *pipeline);
 
     virtual void onMsg(int nlmsg_type, struct nl_object *obj);
 

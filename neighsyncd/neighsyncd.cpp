@@ -12,7 +12,8 @@ int main(int argc, char **argv)
 {
     Logger::linkToDbNative("neighsyncd");
     DBConnector db(APPL_DB, DBConnector::DEFAULT_UNIXSOCKET, 0);
-    NeighSync sync(&db);
+    RedisPipeline pipeline(&db);
+    NeighSync sync(&pipeline);
 
     NetDispatcher::getInstance().registerMessageHandler(RTM_NEWNEIGH, &sync);
     NetDispatcher::getInstance().registerMessageHandler(RTM_DELNEIGH, &sync);
@@ -33,6 +34,7 @@ int main(int argc, char **argv)
             {
                 Selectable *temps;
                 s.select(&temps);
+                pipeline.flush();
             }
         }
         catch (const std::exception& e)

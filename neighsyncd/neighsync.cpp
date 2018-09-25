@@ -15,8 +15,8 @@
 using namespace std;
 using namespace swss;
 
-NeighSync::NeighSync(DBConnector *db) :
-    m_neighTable(db, APP_NEIGH_TABLE_NAME)
+NeighSync::NeighSync(RedisPipeline *pipeline) :
+    m_neighTable(pipeline, APP_NEIGH_TABLE_NAME, true)
 {
 }
 
